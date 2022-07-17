@@ -1,7 +1,6 @@
-import _ from "lodash";
-import mongoose, { Document } from "mongoose";
-import { genSalt, hash, compare } from "bcrypt";
-import config from "config";
+import mongoose, { Document } from 'mongoose';
+import { genSalt, hash, compare } from 'bcrypt';
+import config from 'config';
 
 export interface IUser {
   name: string;
@@ -48,13 +47,13 @@ const userSchema = new mongoose.Schema(
 );
 
 // Encrypt Password
-userSchema.pre("save", async function (next) {
-  let user = this as IUserModel;
+userSchema.pre('save', async function (next) {
+  const user = this as IUserModel;
 
-  if (!user.isModified("password")) {
+  if (!user.isModified('password')) {
     return next();
   }
-  const salt = await genSalt(config.get<number>("saltWorkFactor"));
+  const salt = await genSalt(config.get<number>('saltWorkFactor'));
   user.password = await hash(this.password, salt);
   next();
 });
@@ -67,12 +66,10 @@ userSchema.pre("save", async function (next) {
 // };
 
 // Match user entered password to hashpassword
-userSchema.methods.matchPassword = async function (
-  candidatePassword: string
-): Promise<boolean> {
+userSchema.methods.matchPassword = async function (candidatePassword: string): Promise<boolean> {
   const user = this as IUserModel;
   return await compare(candidatePassword, user.password).catch((e) => false);
 };
 
-const UserModel = mongoose.model("User", userSchema);
+const UserModel = mongoose.model('User', userSchema);
 export default UserModel;

@@ -1,10 +1,10 @@
-import http from "http";
-import app from "./app";
-import config from "config";
-import connect from "./utils/connect";
-import log from "./utils/logger";
+import http from 'http';
+import app from './app';
+import config from 'config';
+import connect from './utils/connect';
+import log from './utils/logger';
 
-const PORT = config.get<number>("port");
+const PORT = config.get<number>('port');
 
 const server = http.createServer(app);
 
