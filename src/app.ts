@@ -1,13 +1,14 @@
 import express, { Request, Response } from 'express';
+import helmet from 'helmet';
 import feedbackRoutes from './routes/feedback.routes';
-import userRoutes from './routes/user.routes';
 
 const app = express();
 app.use(express.json());
+app.use(helmet());
 
 // mount routes
-app.use(feedbackRoutes);
-app.use('/api/v1/auth', userRoutes);
+app.use('/api/v1/feedbacks', feedbackRoutes);
+
 app.use((error: Error, req: Request, res: Response) => {
   return res.status(500).json({ error: [{ message: error.message }] });
 });
