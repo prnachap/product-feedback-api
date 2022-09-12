@@ -11,7 +11,7 @@ const payload = {
 
 const params = {
   params: object({
-    postId: string().required('postId is required'),
+    id: string().required('feedbackId is required'),
   }),
 };
 
