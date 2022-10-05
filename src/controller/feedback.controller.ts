@@ -5,7 +5,6 @@ import { createFeedback, deleteFeedback, findAndUpdate, findFeedback } from '../
 // @desc   Get all feeback
 // @route  GET api/v1/feebacks
 // @access Public
-
 export const getAllFeedbackHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const feedbacks = await findFeedback({});
@@ -18,7 +17,6 @@ export const getAllFeedbackHandler = async (req: Request, res: Response, next: N
 // @desc   Get feeback by id
 // @route  GET api/v1/feebacks/:id
 // @access Public
-
 export const getFeedbackByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const feedbackId = get(req, 'params.id');
@@ -32,7 +30,6 @@ export const getFeedbackByIdHandler = async (req: Request, res: Response, next: 
 // @desc   Create feedback
 // @route  POST api/v1/feebacks
 // @access Private
-
 export const createFeedbackHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const body = req.body;
@@ -46,7 +43,6 @@ export const createFeedbackHandler = async (req: Request, res: Response, next: N
 // @desc   Update feedback
 // @route  PUT api/v1/feebacks/:id
 // @access Private
-
 export const updateFeedbackHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = get(req, 'params.id');
@@ -66,7 +62,6 @@ export const updateFeedbackHandler = async (req: Request, res: Response, next: N
 // @desc   Delete feedback
 // @route  Delete api/v1/feebacks/:id
 // @access Private
-
 export const deleteFeedbackHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = get(req, 'params.id');
