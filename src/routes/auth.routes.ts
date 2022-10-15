@@ -1,7 +1,7 @@
 import Express, { Request, Response } from 'express';
 import passport from 'passport';
 import config from 'config';
-import { getCurrentUser } from '../controller/auth.controller';
+import { getCurrentUser, getLogoutHandler } from '../controller/auth.controller';
 import { protect } from '../middleware/auth';
 
 const authRoutes = Express.Router();
@@ -17,4 +17,5 @@ authRoutes.get(
     return res.redirect(`${config.get<string>('origin')}/auth/login-success`);
   }
 );
+authRoutes.post('/auth/logout', protect, getLogoutHandler);
 export default authRoutes;

@@ -25,7 +25,7 @@ passport.use(
             new: true,
           }
         );
-        done(null, { id: user?._id, username: user?.username });
+        done(null, { id: user?._id });
       } catch (error: any) {
         done(error);
       }
@@ -39,6 +39,6 @@ passport.serializeUser((user, done) => {
 });
 
 // reading the session from the cookie
-passport.deserializeUser(async (user: { id: string; username: string }, done) => {
+passport.deserializeUser(async (user: { id: string }, done) => {
   done(null, user);
 });

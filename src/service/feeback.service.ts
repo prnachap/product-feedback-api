@@ -4,6 +4,10 @@ import FeedbackModel, { IFeedbackModel } from '../model/feedback.model';
 export function createFeedback(input: DocumentDefinition<IFeedbackModel>) {
   return FeedbackModel.create(input);
 }
+export function findAllFeedback(query: FilterQuery<IFeedbackModel>, options: QueryOptions = { lean: true }) {
+  return FeedbackModel.find(query, {}, options);
+}
+
 export function findFeedback(query: FilterQuery<IFeedbackModel>, options: QueryOptions = { lean: true }) {
   return FeedbackModel.findOne(query, {}, options);
 }

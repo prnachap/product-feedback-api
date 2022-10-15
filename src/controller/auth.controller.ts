@@ -12,3 +12,16 @@ export const getCurrentUser = async (req: Request, res: Response, next: NextFunc
     next(error);
   }
 };
+
+// @desc   logout user
+// @route  Get api/v1/auth/logout
+// @access Private
+export const getLogoutHandler = async (req: Request, res: Response, next: NextFunction) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    return res.status(200);
+    // res.send('Logged out successfully').redirect('/');
+  });
+};

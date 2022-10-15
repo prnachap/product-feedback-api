@@ -1,10 +1,14 @@
 import mongoose, { Document } from 'mongoose';
+import { ICommentModel } from './comment.model';
+import { IUserModel } from './user.model';
 
 export interface IFeedback {
   title: string;
   category: string;
   description: string;
   status: string;
+  user: IUserModel['_id'];
+  comments: ICommentModel['_id'][];
 }
 
 export interface IFeedbackModel extends Document, IFeedback {
@@ -31,9 +35,35 @@ const FeedbackSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   },
   { timestamps: true }
 );
 
-const FeedbackModel = mongoose.model('Feedback', FeedbackSchema);
+FeedbackSchema.pre(/^find|save/, function (next) {
+  this.populate([
+    { path: 'user', select: 'username' },
+    {
+      path: 'comments',
+      model: 'Comment',
+      select: 'content user comments',
+      populate: [
+        {
+          path: 'user',
+          model: 'User',
+          select: 'username',
+        },
+        {
+          path: 'comments',
+          model: 'Comment',
+          select: 'content user comments',
+        },
+      ],
+    },
+  ]);
+  next();
+});
+
+const FeedbackModel = mongoose.model<IFeedbackModel>('Feedback', FeedbackSchema);
 export default FeedbackModel;
