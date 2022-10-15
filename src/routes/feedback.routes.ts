@@ -6,6 +6,7 @@ import {
   deleteCommentHandler,
   deleteFeedbackHandler,
   deleteReplyHandler,
+  feedbackLikesHandler,
   getAllFeedbackHandler,
   getFeedbackByIdHandler,
   updateFeedbackHandler,
@@ -19,6 +20,7 @@ const feedbackRoutes = Express.Router();
 
 feedbackRoutes.get('/', getAllFeedbackHandler);
 feedbackRoutes.get('/:feedbackId', getFeedbackByIdHandler);
+feedbackRoutes.put('/:feedbackId/likes', protect, feedbackLikesHandler);
 feedbackRoutes.post('/', protect, validate(createFeedbackSchema), createFeedbackHandler);
 
 feedbackRoutes.put('/:feedbackId', protect, validate(updateFeedbackSchema), updateFeedbackHandler);

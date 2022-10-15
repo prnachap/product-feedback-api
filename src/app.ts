@@ -8,6 +8,7 @@ import cookieSession from 'cookie-session';
 import cors from 'cors';
 import path from 'path';
 import errorHandler from './middleware/error';
+import config from 'config';
 
 // passort stratergy
 require('./utils/authPassport');
@@ -22,7 +23,7 @@ app.use(
   cookieSession({
     name: 'session',
     maxAge: 60 * 60 * 1000,
-    keys: ['secretkey'],
+    keys: [config.get<string>('sessionSecretKey')],
   })
 );
 app.use(passport.initialize());

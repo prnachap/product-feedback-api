@@ -242,3 +242,31 @@ export const deleteReplyHandler = async (req: Request, res: Response, next: Next
     next(error);
   }
 };
+
+// @desc   like feedbacks
+// @route  PUT api/v1/feebacks/:feedbackId/likes
+// @access Private
+
+export const feedbackLikesHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id: userId } = req.user as User;
+    const feedbackId = get(req, 'params.feedbackId');
+    const feedback = await findFeedback({ _id: feedbackId }, { lean: false });
+
+    if (!feedback) {
+      return next(new ErrorResponse(`feedbackId-${feedbackId} not found`, 400));
+    }
+    const userIndex = feedback?.upvotes.findIndex((user) => isEqual(user.toString(), userId));
+    // upvote if user has not liked the post
+    // downvote if user has already liked the post
+    if (gte(userIndex, 0)) {
+      feedback.upvotes.splice(userIndex, 1);
+    } else {
+      feedback.upvotes.push(userId);
+    }
+    await feedback.save();
+    return res.status(200).json({ data: feedback });
+  } catch (error) {
+    next(error);
+  }
+};

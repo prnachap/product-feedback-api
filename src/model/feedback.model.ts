@@ -7,6 +7,7 @@ export interface IFeedback {
   category: string;
   description: string;
   status: string;
+  upvotes: IUserModel['_id'][];
   user: IUserModel['_id'];
   comments: ICommentModel['_id'][];
 }
@@ -35,6 +36,7 @@ const FeedbackSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    upvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   },
