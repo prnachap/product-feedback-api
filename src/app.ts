@@ -9,11 +9,12 @@ import cors from 'cors';
 import path from 'path';
 import errorHandler from './middleware/error';
 import config from 'config';
+import morganMiddleware from './middleware/morganMiddleware';
 
 // passort stratergy
 require('./utils/authPassport');
 
-const app = express();
+export const app = express();
 
 // middlewares
 app.use(express.json());
@@ -29,6 +30,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// request logger middleware
+app.use(morganMiddleware);
 // mount routes
 app.use('/api/v1/feedbacks', feedbackRoutes);
 app.use('/api/v1/users', userRoutes);
