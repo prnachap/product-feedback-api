@@ -1,19 +1,18 @@
+import cookieSession from 'cookie-session';
+import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import passport from 'passport';
+import path from 'path';
+import errorHandler from './middleware/error';
+import morganMiddleware from './middleware/morganMiddleware';
 import authRoutes from './routes/auth.routes';
 import feedbackRoutes from './routes/feedback.routes';
 import userRoutes from './routes/user.routes';
-import cookieSession from 'cookie-session';
-import cors from 'cors';
-import path from 'path';
-import errorHandler from './middleware/error';
 import config from 'config';
-import morganMiddleware from './middleware/morganMiddleware';
 
 // passort stratergy
 require('./utils/authPassport');
-
 export const app = express();
 
 // middlewares
@@ -37,7 +36,7 @@ app.use('/api/v1/feedbacks', feedbackRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1', authRoutes);
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

@@ -1,6 +1,9 @@
+/* eslint-disable import/first */
+import dotenv from 'dotenv';
+dotenv.config();
+import config from 'config';
 import http from 'http';
 import app from './app';
-import config from 'config';
 import connect from './utils/connect';
 import logger from '../logger';
 
