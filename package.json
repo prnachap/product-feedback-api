@@ -5,14 +5,14 @@
   "main": "server.js",
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/server.ts",
-    "start": "node build/src/server.js",
+    "start": "NODE_ENV=production node build/src/server.js",
     "build": "tsc",
     "lint": "eslint src/**/*.ts",
     "check-types": "tsc --pretty --noEmit",
     "check-format": "prettier --check .",
     "format": "prettier --write .",
     "prepare": "husky install",
-    "test": "jest"
+    "test": "NODE_ENV=test jest"
   },
   "husky": {
     "hooks": {
