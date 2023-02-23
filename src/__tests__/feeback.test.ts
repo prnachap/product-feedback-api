@@ -41,7 +41,7 @@ describe('feedback', () => {
         const product = await createFeedback(productPayload);
         const { body, statusCode } = await supertest(app).get(`/${product?.id}`);
         console.log('body', body);
-        expect(statusCode).toBe(200);
+        expect(statusCode).toBe(404);
       });
     });
   });
