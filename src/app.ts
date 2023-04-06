@@ -1,5 +1,5 @@
 import cookieSession from 'cookie-session';
-import cors from 'cors';
+import cors, { CorsOptions } from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import passport from 'passport';
@@ -10,14 +10,31 @@ import authRoutes from './routes/auth.routes';
 import feedbackRoutes from './routes/feedback.routes';
 import userRoutes from './routes/user.routes';
 import config from 'config';
+import { isEqual } from 'lodash';
 
 // passort stratergy
 require('./utils/authPassport');
 export const app = express();
 
+// cors options
+const allowedOrigins = ['http://localhost:3000'];
+
+const corsOptions: CorsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    // allow requests from no origin like mobile apps or curl
+    if (!origin) return callback(null, true);
+    if (isEqual(allowedOrigins.indexOf(origin), -1)) {
+      const message = `This site ${origin} does not have an access. Only specific domains are allowerd to access it`;
+      return callback(new Error(message), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+};
+
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(
   cookieSession({

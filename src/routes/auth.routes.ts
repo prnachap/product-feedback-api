@@ -14,7 +14,7 @@ authRoutes.get(
     failureRedirect: `${config.get<string>('origin')}/login`,
   }),
   (req: Request, res: Response) => {
-    return res.redirect(`${config.get<string>('origin')}/auth/login-success`);
+    return res.redirect(`${config.get<string>('origin')}/`);
   }
 );
 authRoutes.post('/auth/logout', protect, getLogoutHandler);
