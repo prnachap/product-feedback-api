@@ -66,10 +66,12 @@ export const updateFeedbackHandler = async (req: Request, res: Response, next: N
     const { id: userId } = req.user as User;
     const update = req.body;
     const feedback = await findFeedback({ _id: feedbackId });
+
     if (isEmpty(feedback)) {
       return next(new ErrorResponse(`feedbackId-${feedbackId} not found`, 400));
     }
-    if (!isEqual(feedback?.user?.toString(), userId)) {
+
+    if (!isEqual(feedback?.user?._id?.toString(), userId)) {
       return next(new ErrorResponse('Not Authorized', 401));
     }
     const data = await findAndUpdate({ _id: feedbackId }, update, { new: true, runValidators: true });
@@ -94,7 +96,7 @@ export const deleteFeedbackHandler = async (req: Request, res: Response, next: N
     if (isEmpty(feedback)) {
       return next(new ErrorResponse(`feedbackId-${feedbackId} not found`, 400));
     }
-    if (!isEqual(feedback?.user?.toString(), userId)) {
+    if (!isEqual(feedback?.user?._id?.toString(), userId)) {
       return next(new ErrorResponse('Not Authorized', 401));
     }
     await deleteFeedback({ _id: feedbackId });
@@ -187,7 +189,7 @@ export const deleteCommentHandler = async (req: Request, res: Response, next: Ne
       return next(new ErrorResponse(`commentId-${commentId} not found`, 400));
     }
 
-    if (!isEqual(comment?.user?.toString(), userId)) {
+    if (!isEqual(comment?.user?._id?.toString(), userId)) {
       return next(new ErrorResponse('Not Authorized', 401));
     }
     // delete comment

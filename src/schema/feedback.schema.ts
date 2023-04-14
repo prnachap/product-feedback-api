@@ -5,7 +5,7 @@ const payload = {
     title: string().required('Title is required'),
     category: string().required('Category is required'),
     status: string().required('Status is required'),
-    description: string().required('Status is required').min(3, 'description cannot be empty'),
+    description: string().required('Status is required').min(3, 'description should be min of 3 characters'),
   }),
 };
 
