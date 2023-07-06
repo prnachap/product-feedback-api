@@ -18,7 +18,7 @@ passport.use(
           {
             name: `${profile.name?.familyName} ${profile.name?.givenName}`,
             email: profile.emails?.[0]?.value,
-            username: `${profile.name?.familyName}${profile.name?.givenName}`,
+            username: `${profile.name?.familyName?.replace(' ', '')}${profile.name?.givenName}`,
           },
           {
             upsert: true,

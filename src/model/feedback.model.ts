@@ -45,24 +45,8 @@ const FeedbackSchema = new mongoose.Schema(
 
 FeedbackSchema.pre(/^find|save/, function (next) {
   this.populate([
-    { path: 'user', select: 'username' },
-    {
-      path: 'comments',
-      model: 'Comment',
-      select: 'content user comments',
-      populate: [
-        {
-          path: 'user',
-          model: 'User',
-          select: 'username',
-        },
-        {
-          path: 'comments',
-          model: 'Comment',
-          select: 'content user comments',
-        },
-      ],
-    },
+    { path: 'user', select: 'username name' },
+    { path: 'comments', select: 'content' },
   ]);
   next();
 });
